@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import Aux from '../../hoc/Aux'
-import Burger from '../../components/Layout/Burger/Burger';
-import BuildControls from '../../components/Layout/Burger/BuildControls/BuildControls';
+import Aux from '../../hoc/Aux/Aux'
+import Burger from '../../components/Burger/Burger';
+import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
-import OrderSummary from '../../components/Layout/Burger/OrderSummary/OrderSummary';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 
 const INGREDIENT_PRICES = {
     salad: .50,
@@ -25,7 +25,7 @@ class BurgerBuilder extends Component {
             cheese: 0,
             meat: 0
         },
-        totalPrice: 0,
+        totalPrice: 4,
         purchasing: false
     }
 
@@ -53,6 +53,10 @@ class BurgerBuilder extends Component {
     backdropHandler = () =>{
         this.setState({purchasing: false})
     }
+
+    purchaseHandler = () =>{
+        alert('yay');
+    }
     
     render(){
         const disabledInfo = {...this.state.ingredients};
@@ -68,7 +72,13 @@ class BurgerBuilder extends Component {
 
         return(
             <Aux>
-                <Modal closeBackdrop={this.backdropHandler} show={this.state.purchasing}><OrderSummary ingredientSummary={this.state.ingredients}/></Modal>
+                <Modal closeBackdrop={this.backdropHandler} show={this.state.purchasing}>
+                    <OrderSummary 
+                        price = {this.state.totalPrice.toFixed(2)}
+                        purchaseContinue={this.purchaseHandler} 
+                        purchaseCancel={this.backdropHandler} 
+                        ingredientSummary={this.state.ingredients}/>
+                </Modal>
                     <Burger ingredients ={this.state.ingredients}/>
                     <BuildControls purchasing={this.currentlyPurchasing} disabledInfo={disabledInfo} 
                         removeIngredient ={this.removeIngredientHandler} 

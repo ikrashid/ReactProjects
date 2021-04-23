@@ -22,7 +22,7 @@ const config = {
     //get() is a snapshot of whats in the db
     const snapshot = await userRef.get();
 
-    if(!snapshot.exists){
+    if(!snapshot.exists){//when users sign up
       const { displayName, email} = userAuth;
       const createdAt = new Date ();
       try{
